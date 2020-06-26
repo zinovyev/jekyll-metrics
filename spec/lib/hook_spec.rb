@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 RSpec.describe JekyllMetrics::Hook do
   subject(:hook) { described_class.new(page) }
-  let(:page) { OpenStruct.new({ site: nil }) }
+  let(:page) { OpenStruct.new({ :site => nil }) }
   let(:config) do
     OpenStruct.new(
-      template_path: template_path,
-      plugin_vars: {
-        'template_path' => template_path,
-        'yandex_metrica_id' => '22222222',
-        'google_analytics_id' => '11-111111111-1'
+      :template_path => template_path,
+      :plugin_vars   => {
+        'template_path'       => template_path,
+        'yandex_metrica_id'   => '22222222',
+        'google_analytics_id' => '11-111111111-1',
       }
     )
   end

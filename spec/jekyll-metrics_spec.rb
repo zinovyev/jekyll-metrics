@@ -5,11 +5,11 @@ RSpec.describe JekyllMetrics do
 
   let(:configs) do
     Jekyll.configuration(
-      'full_rebuild' => true,
+      'full_rebuild'      => true,
       'skip_config_files' => false,
-      'collections' => { 'docs' => { 'output' => true }, 'secret' => {} },
-      'source' => fixtures_dir,
-      'destination' => dest_dir
+      'collections'       => { 'docs' => { 'output' => true }, 'secret' => {} },
+      'source'            => fixtures_dir,
+      'destination'       => dest_dir
     )
   end
   let(:site) { Jekyll::Site.new(configs) }

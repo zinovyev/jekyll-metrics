@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module JekyllMetrics
   # Hold the configuration needed for {JekyllMetrics::Hook} to work
   class Config
-    CONFIG_NAME = 'jekyll_metrics'.freeze
-    DEFAULT_TEMPLATE_PATH = 'lib/jekyll-metrics/includes/metrics.html.liquid'.freeze
+    CONFIG_NAME = 'jekyll_metrics'
+    DEFAULT_TEMPLATE_PATH = 'lib/jekyll-metrics/includes/metrics.html.liquid'
     DEFAULT_CONFIG = {
-      'template' => DEFAULT_TEMPLATE_PATH,
-      'yandex_metrica_id' => 'XXXXXXXX',
-      'google_analytics_id' => 'XX-XXXXXXXXX-X'
+      'template'            => DEFAULT_TEMPLATE_PATH,
+      'yandex_metrica_id'   => 'XXXXXXXX',
+      'google_analytics_id' => 'XX-XXXXXXXXX-X',
     }.freeze
 
     class << self
@@ -36,7 +38,7 @@ module JekyllMetrics
 
       return default_template_path if custom_path.nil?
 
-      if custom_path.match?(%r{^\/})
+      if custom_path.match?(%r!^\/!)
         Pathname.new(custom_path)
       else
         site_root_path.join(custom_path)

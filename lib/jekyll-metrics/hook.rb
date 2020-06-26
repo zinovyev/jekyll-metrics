@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllMetrics
   # Compile metrics template and inject it into the page code
   class Hook
@@ -41,7 +43,7 @@ module JekyllMetrics
       page.output.match?('<html') && page.output.match('<\/head')
     end
 
-    def inject_after_first_script(first_head_script, document)
+    def inject_after_first_script(first_head_script, _document)
       first_head_script.add_previous_sibling(load_scripts)
     end
 

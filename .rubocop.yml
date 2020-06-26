@@ -1,0 +1,13 @@
+require: rubocop-jekyll
+inherit_gem:
+  rubocop-jekyll: .rubocop.yml
+
+Metrics/LineLength:
+  Enabled: false
+  Max: 120
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - spec/jekyll-metrics_spec.rb
+    - spec/spec_helper.rb

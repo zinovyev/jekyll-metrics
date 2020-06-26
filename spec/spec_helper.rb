@@ -36,7 +36,7 @@ RSpec.configure do |config|
   def grab_scripts(content)
     return if content.nil?
 
-    splitted_content = content.split('</head>').first&.split(/(?=\<script)/)&.map { |l| strip_indents(l) } || []
+    splitted_content = content.split('</head>').first&.split(%r!(?=\<script)!)&.map { |l| strip_indents(l) } || []
     splitted_content.shift # Remove the <!DOCTYPE html>... part
     splitted_content
   end
@@ -48,6 +48,6 @@ RSpec.configure do |config|
   end
 
   def strip_indents_in_lines(script)
-    script.split(/(?<=\\n$)/).map { |line| line.gsub(/^\s+/, '')&.strip }.join("\n").strip
+    script.split(%r!(?<=\\n$)!).map { |line| line.gsub(%r!^\s+!, '')&.strip }.join("\n").strip
   end
 end

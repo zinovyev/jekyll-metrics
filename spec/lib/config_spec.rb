@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 RSpec.describe JekyllMetrics::Config do
   subject(:config) { described_class.new(site) }
-  let(:site) { OpenStruct.new(config: site_config, source: '/foo/boo/bar') }
-  let(:site_config) { Jekyll::Configuration.from(jekyll_metrics: plugin_config) }
+  let(:site) { OpenStruct.new(:config => site_config, :source => '/foo/boo/bar') }
+  let(:site_config) { Jekyll::Configuration.from(:jekyll_metrics => plugin_config) }
   let(:plugin_config) do
     {
-      'template' => path,
-      'yandex_metrica_id' => '22222222',
-      'google_analytics_id' => '11-111111111-1'
+      'template'            => path,
+      'yandex_metrica_id'   => '22222222',
+      'google_analytics_id' => '11-111111111-1',
     }
   end
   let(:path) { 'path/to/template.html' }
