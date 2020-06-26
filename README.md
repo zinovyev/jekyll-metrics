@@ -2,7 +2,7 @@
 
 
 [![Build Status](https://travis-ci.org/zinovyev/jekyll-metrics.svg?branch=master)](https://travis-ci.org/zinovyev/jekyll-metrics)
-[![Gem Version](https://img.shields.io/gem/v/jekyll-metrics.svg?label=Latest%20Release)][rubygems]
+[![Gem Version](https://img.shields.io/gem/v/jekyll-metrics.svg?label=Latest%20Release)](https://rubygems.org/gems/jekyll-metrics)
 
 
 A Jekyll plugin to inject Google Analytics and Yandex Metrica counters into your pages
