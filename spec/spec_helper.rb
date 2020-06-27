@@ -1,3 +1,4 @@
+require 'pry'
 require 'bundler/setup'
 require 'jekyll-metrics'
 require File.expand_path('../lib/jekyll-metrics', __dir__)
@@ -11,5 +12,42 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  SOURCE_DIR = File.expand_path('fixtures', __dir__)
+  DEST_DIR   = File.expand_path('dest',     __dir__)
+
+  def fixtures_dir(*files)
+    File.join(SOURCE_DIR, *files)
+  end
+
+  def dest_dir(*files)
+    File.join(DEST_DIR, *files)
+  end
+
+  def read_file(path_to)
+    File.read(dest_path.join(path_to)).strip
+  end
+
+  def dest_path
+    @dest_path ||= Pathname.new(File.expand_path('dest', __dir__))
+  end
+
+  def grab_scripts(content)
+    return if content.nil?
+
+    splitted_content = content.split('</head>').first&.split(/(?=\<script)/)&.map { |l| strip_indents(l) } || []
+    splitted_content.shift # Remove the <!DOCTYPE html>... part
+    splitted_content
+  end
+
+  def strip_indents(script)
+    return unless script
+
+    script.replace(strip_indents_in_lines(script))
+  end
+
+  def strip_indents_in_lines(script)
+    script.split(/(?<=\\n$)/).map { |line| line.gsub(/^\s+/, '')&.strip }.join("\n").strip
   end
 end

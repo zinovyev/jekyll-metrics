@@ -14,10 +14,22 @@ module JekyllMetrics
     end
 
     def inject_scripts
-      page.output.gsub!(%r{<\/head>}, load_scripts)
+      return unless page.output.match?('html')
+
+      document = Nokogiri::HTML(page.output)
+      first_head_script = find_first_script(document)
+
+      return unless first_head_script
+
+      first_head_script.add_previous_sibling(load_scripts)
+      page.output.replace(document.to_html)
     end
 
     private
+
+    def find_first_script(document)
+      document&.xpath('//head')&.xpath('script')&.first
+    end
 
     def prepare_scripts_for(closing_tag)
       [load_scripts, "</#{closing_tag}>"].compact.join("\n")

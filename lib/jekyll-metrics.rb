@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'jekyll'
+require 'nokogiri'
 require File.expand_path('jekyll-metrics/version', __dir__)
 require File.expand_path('jekyll-metrics/config', __dir__)
 require File.expand_path('jekyll-metrics/hook', __dir__)
