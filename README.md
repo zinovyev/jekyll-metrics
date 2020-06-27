@@ -1,10 +1,11 @@
 # JekyllMetrics
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jekyll-metrics`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
+A Jekyll plugin to inject Google Analytics and Yandex Metrica counters into your pages
+
 
 ## Installation
+
 
 Add this line to your application's Gemfile:
 
@@ -20,25 +21,71 @@ Or install it yourself as:
 
     $ gem install jekyll-metrics
 
+
 ## Usage
 
-TODO: Write usage instructions here
+
+The scripts will be automatically injected to the top of your pages as soon as the plugin is enabled:
+* Above the first `<script>` in the `<head>` tag;
+* Or just to the bottom of the `<head>` tag if no other scripts are loaded;
+
+To enable the plugin, add it to the list of plugins:
+
+```yaml
+plugins:
+  ...
+  - jekyll-metrics
+```
+
+To make the plugin work properly, the following configuration options should be added to your `_config.yml` file:
+
+```yaml
+jekyll_metrics:
+  yandex_metrica_id: 11111111,
+  google_analytics_id: 22-222222222-2
+```
+
+The `11111111` should be replaced with your personal Yandex Metrica counter ID and the `22-222222222-2` - with one
+from your Google Analytics account accordinately.
+
+
+## Advanced configuration
+
+
+Actually the plugin may be used to inject any script you like. You'll just need to replace the template of the
+substitution scripts. To do so create a file (e.g. `_includes/metrics.html.liquid`) in your site directory and add an
+extra parameter to the configuration section described above:
+
+```yaml
+jekyll_metrics:
+  template: _includes/metrics.html.liquid
+  yandex_metrica_id: 11111111,
+  google_analytics_id: 22-222222222-2
+```
+
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+After checking out the repo, run `rake spec` to run the tests. 
+
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jekyll-metrics. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/jekyll-metrics/blob/master/CODE_OF_CONDUCT.md).
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/zinovyev/jekyll-metrics.
+This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere
+to the [code of conduct](https://github.com/zinovyev/jekyll-metrics/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## License
 
+
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
 
 ## Code of Conduct
 
-Everyone interacting in the JekyllMetrics project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/jekyll-metrics/blob/master/CODE_OF_CONDUCT.md).
+
+Everyone interacting in the JekyllMetrics project's codebases, issue trackers, chat rooms and mailing lists is
+expected to follow the [code of conduct](https://github.com/[USERNAME]/jekyll-metrics/blob/master/CODE_OF_CONDUCT.md).
