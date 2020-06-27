@@ -8,24 +8,46 @@ module JekyllMetrics
       yield(@page, self) if block_given? && injectable?
     end
 
-    def injectable?
-      ['Jekyll::Document', 'Jekyll::Page'].include?(page.class.name) || page.write? &&
-        (page.output_ext == '.html' || page.permalink&.end_with?('/'))
-    end
-
     def inject_scripts
-      return unless page.output.match?('html')
+      return unless injectable?
 
       document = Nokogiri::HTML(page.output)
       first_head_script = find_first_script(document)
 
-      return unless first_head_script
+      if first_head_script
+        inject_after_first_script(first_head_script, document)
+      else
+        inject_before_closing_head(document)
+      end
 
-      first_head_script.add_previous_sibling(load_scripts)
       page.output.replace(document.to_html)
     end
 
     private
+
+    def injectable?
+      writable? && compiled_to_html_page? && can_be_modified?
+    end
+
+    def writable?
+      [Jekyll::Document, Jekyll::Page].include?(page.class) || page.write?
+    end
+
+    def compiled_to_html_page?
+      page.output_ext == '.html' || page.permalink&.end_with?('/')
+    end
+
+    def can_be_modified?
+      page.output.match?('<html') && page.output.match('<\/head')
+    end
+
+    def inject_after_first_script(first_head_script, document)
+      first_head_script.add_previous_sibling(load_scripts)
+    end
+
+    def inject_before_closing_head(document)
+      document&.xpath('//head')&.first&.add_child(load_scripts)
+    end
 
     def find_first_script(document)
       document&.xpath('//head')&.xpath('script')&.first
