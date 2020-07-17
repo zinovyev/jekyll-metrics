@@ -5,10 +5,12 @@ module JekyllMetrics
   class Config
     CONFIG_NAME = 'jekyll_metrics'
     DEFAULT_TEMPLATE_PATH = 'lib/jekyll-metrics/includes/metrics.html.liquid'
+    DEFAULT_ENVIRONMENT = 'production'
     DEFAULT_CONFIG = {
       'template'            => DEFAULT_TEMPLATE_PATH,
       'yandex_metrica_id'   => 'XXXXXXXX',
       'google_analytics_id' => 'XX-XXXXXXXXX-X',
+      'environment'         => ENV.fetch('JEKYLL_ENV', DEFAULT_ENVIRONMENT),
     }.freeze
 
     class << self
@@ -29,6 +31,10 @@ module JekyllMetrics
 
     def plugin_vars
       @plugin_vars ||= DEFAULT_CONFIG.merge(plugin_config)
+    end
+
+    def production?
+      @production ||= (plugin_vars['environment'] == DEFAULT_ENVIRONMENT)
     end
 
     private
@@ -60,7 +66,7 @@ module JekyllMetrics
     end
 
     def plugin_config
-      @plugin_config ||= site_config[CONFIG_NAME].to_h.transform_keys(&:to_s)
+      @plugin_config ||= site_config[CONFIG_NAME].to_h.transform_keys(&:to_s).compact
     end
 
     def site_config

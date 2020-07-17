@@ -28,7 +28,11 @@ module JekyllMetrics
     private
 
     def injectable?
-      writable? && compiled_to_html_page? && can_be_modified?
+      production? && writable? && compiled_to_html_page? && can_be_modified?
+    end
+
+    def production?
+      config.production?
     end
 
     def writable?

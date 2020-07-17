@@ -29,6 +29,10 @@ RSpec.configure do |config|
     File.read(dest_path.join(path_to)).strip
   end
 
+  def root_path
+    @root_path ||= Pathname.new(File.expand_path('..', __dir__))
+  end
+
   def dest_path
     @dest_path ||= Pathname.new(File.expand_path('dest', __dir__))
   end
